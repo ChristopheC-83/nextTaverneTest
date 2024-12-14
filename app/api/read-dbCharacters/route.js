@@ -15,7 +15,7 @@ export const GET = async () => {
     // Retourner une réponse en cas d'erreur
     return NextResponse.json(
       {
-        message: "Erreur lors de la récupération des personnages",
+        message: "Erreur lors de la récupération des personnages !! ",
         error: error.message,
       },
       { status: 500 }

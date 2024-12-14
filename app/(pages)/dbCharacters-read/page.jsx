@@ -15,7 +15,7 @@ export default function DbCharactersRead() {
       const response = await fetch("/api/read-dbCharacters");
       console.log("response", response);
       if (!response.ok) {
-        throw new Error("Erreur lors de la récupération des personnages");
+        throw new Error("Erreur lors de la récupération des personnages !!!");
       }
       const data = await response.json();
       setCharacters(data.characters);
