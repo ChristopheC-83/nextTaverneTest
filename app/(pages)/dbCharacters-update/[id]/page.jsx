@@ -2,44 +2,54 @@
 
 import Title from "@/components/title/Title";
 import { fetchApiImg } from "@/utils/fetchApiImg";
-import { nanoid } from "nanoid";
-import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import React, { use, useEffect, useState } from "react";
 import { toast } from "sonner";
 
-export default function DbCharactersCreate() {
-  // fetch des images
+export default function DbCharactersRead({ params: paramsPromise }) {
+  // phase 1
+  const params = use(paramsPromise);
+  // console.log(params);
+  const id = params.id;
+  // console.log(id);
 
-  const [images, setImages] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  // phase 3
+  const router = useRouter()
+
+  // phase 2
+
   const [message, setMessage] = useState("");
-
-  // valeurs par défaut
+  const [loading, setLoading] = useState(true);
+  const [images, setImages] = useState([]);
   const [formData, setFormData] = useState({
-    id: nanoid(8),
     name: "",
     image: "",
     health: "",
     magic: "",
     power: "",
     side_name: "",
-    from: "dbCharacters",
+    from:"dbCharacters"
   });
 
-  useEffect(() => {
-    async function loadImages() {
-      try {
-        const data = await fetchApiImg();
-        console.log(data);
-        setImages(data);
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
+  async function fetchOneCharacterbyId(id) {
+    try {
+      const response = await fetch(`/api/read-dbCharacters/${id}`);
+      console.log("response", response);
+      const data = await response.json();
+      console.log("data", data);
+      if (response.ok) {
+        setFormData(data.character); // Mettre à jour le formulaire avec les données du personnage
+      } else {
+        toast.error(
+          data.message || "Erreur lors de la récupération du personnage"
+        );
+        router.replace("/dbCharacters-read");
       }
+    } catch (err) {
+      console.error(err);
+      router.replace("/dbCharacters-read");
     }
-    loadImages();
-  }, []);
+  }
 
   const handleChange = (e) => {
     setFormData({
@@ -48,62 +58,56 @@ export default function DbCharactersCreate() {
     });
   };
 
+  useEffect(() => {
+    async function loadImages() {
+      try {
+        const data = await fetchApiImg();
+        setImages(data);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadImages();
+    setFormData(fetchOneCharacterbyId(id));
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     // console.log(formData);
 
-    if (
-      !formData.name ||
-      !formData.image ||
-      !formData.health ||
-      !formData.magic ||
-      !formData.power ||
-      !formData.side_name
-    ) {
-      setMessage("Veuillez remplir tous les champs");
-      return;
-    }
-
     try {
-      const response = await fetch("/api/create-dbCharacters", {
-        method: "POST",
+      const response = await fetch(`/api/update-dbCharacters`, {
+        method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ id, ...formData }),
       });
-
       const data = await response.json();
+      // console.log("datas : ",data);
 
       if (response.ok) {
-        setFormData({
-          id: nanoid(8),
-          name: "",
-          image: "",
-          health: "",
-          magic: "",
-          power: "",
-          side_name: "",
-          from: "dbCharacters",
-        });
-        setMessage("");
-        toast.success("Personnage créé avec succès !");
-        return;
+        toast.success("Personnage modifié avec succès !");
+        router.push("/dbCharacters-read");
+      } else {
+        toast.error(data.message || "Erreur lors de la modification.");
       }
-    } catch (error) {
-      console.error("Erreur lors de la requête :", error);
-      setMessage("Une erreur s'est produite !!!");
+    } catch (err) {
+      console.error(err);
+      toast.error("Une erreur s'est produite !");
     }
   };
 
   return (
     <div>
-      <Title>Création d'un personnage en DB</Title>
+      <Title>Modifions {id} </Title>
       <form onSubmit={handleSubmit} className="w-[96%] mx-auto max-w-xl">
         <input
           className="w-full p-2 mb-4 border border-gray-300 rounded text-black"
           type="text"
           name="name"
           placeholder="Nom"
-          value={formData.name}
+          value={formData.name || ""}
           onChange={handleChange}
         />
         {images && (
@@ -111,7 +115,7 @@ export default function DbCharactersCreate() {
             className="w-full p-2 mb-4 border border-gray-300 rounded text-black"
             type="text"
             name="image"
-            value={formData.side_name}
+            value={formData.image || ""}
             onChange={handleChange}
           >
             <option value="">Choisissez votre Avatar</option>
@@ -127,7 +131,7 @@ export default function DbCharactersCreate() {
           type="number"
           name="health"
           placeholder="Santé"
-          value={formData.health}
+          value={formData.health || ""}
           onChange={handleChange}
         />
         <input
@@ -135,7 +139,7 @@ export default function DbCharactersCreate() {
           type="number"
           name="magic"
           placeholder="Magie"
-          value={formData.magic}
+          value={formData.magic || ""}
           onChange={handleChange}
         />
         <input
@@ -143,14 +147,14 @@ export default function DbCharactersCreate() {
           type="number"
           name="power"
           placeholder="Puissance"
-          value={formData.power}
+          value={formData.power || ""}
           onChange={handleChange}
         />
         <select
           className="w-full p-2 mb-4 border border-gray-300 rounded text-black"
           type="text"
           name="side_name"
-          value={formData.side_name}
+          value={formData.side_name || ""}
           onChange={handleChange}
         >
           <option value="">Choisissez votre camp</option>
@@ -163,7 +167,7 @@ export default function DbCharactersCreate() {
           type="submit"
           className="p-2 w-full text-white bg-blue-500 rounded hover:opacity-85 duration-300"
         >
-          Créer le personnage
+          Moodifier le personnage
         </button>
       </form>
 

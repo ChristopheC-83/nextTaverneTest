@@ -18,6 +18,12 @@ export const itemsLink = [
         name:'Créer Personnage'
 
     },
+    {
+        id:4,
+        url:'/dbCharacters-read',
+        name:'DB_Perso'
+
+    },
 
 
 ]

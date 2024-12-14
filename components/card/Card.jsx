@@ -32,7 +32,7 @@ export default function Card({ character,deleteCharacter }) {
     >
       <div  className="w-[250px] h-[250px] overflow-hidden">
           <Image
-            src={`${URL}${character.image}`}
+            src={character.from === "apiCharacters" ? `${URL}${character.image}` : character.image}
             alt={character.name}
             width={250}
             height={250}
@@ -53,10 +53,15 @@ export default function Card({ character,deleteCharacter }) {
         ))}
       </div>
       <div className="flex justify-around">
+      {character.side_id ? (
           <Link href={`/api-characters/${character.id}`}>
             <Buttons color="bg-green-500">Voir</Buttons>
           </Link>
-       
+        ) : (
+          <Link href={`/dbCharacters-update/${character.id}`}>
+            <Buttons color="bg-green-500">Modifier</Buttons>
+          </Link>
+        )}
         <Buttons
           color="bg-red-500"
           onClick={() => deleteCharacter(character.id)}

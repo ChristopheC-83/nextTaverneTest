@@ -1,23 +1,31 @@
-phase 10:
+phase 13 : 
 
-dasn app, nous allons donc créer un dossier "api"
+on a besoin de récupérer les infos d'un personnage donné en fonction de son infos
+on pourrait appeler tous les personnages et filtré
+oufaire un appel api ciblé sur un seul personnage
 
-et là, un choix cornellien
+dans read, on va créer le fichier [id]/route.js
+on récupère l'id et prisma nous permet une requete 
+pour récupérer les info de ce personnage
 
-- un fichier dbCharacters avec les 4 operations  dedans 
-ou 
-- un fichier par operation
+dans page.jsx, on crée la fonction fetchOneCharacterById
 
-J'opte pour cette seconde méthode, plus claire et plus facile à maintenir, à mon goût !
+on l'appelle dans useEffect
 
-créons le fichier create-dbCharacters/route.js
+on corrige les erreurs qui apparaissent pour adapter le code
 
-le route.js est une demande de NextJS pour les routes API.
+on change le bouton "modifier" pas 'creer'
 
-petite digression sur Prisma.
-Nous allons devoir nous connecter en utilisant le prisma client
-Là on fait, on cherche pas à comprendre
-on crée le fichier lib/connect.js
-et on copie colle le code demandé par prisma
+on récupère bien les infos modifiées
+envoyées les dans l'api route update
 
-On est bon, on met ça de coté pour le moment
+on complete handlesubmit
+on fetch la bonne route d'update
+method put pour les changement
+patch serait le changement partiel du personnage, ici nous mettons tout à jour, on renvoie tout donc !
+
+dans le fichier route.js, on crée la route update
+
+
+
+
