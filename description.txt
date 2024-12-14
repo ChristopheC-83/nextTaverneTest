@@ -14,3 +14,12 @@ dans le useEffect:
 on se rajoute même un toast
 
 Voilà qui est mieux
+
+on commence en installant prisma: npm i prisma -D
+on initialise : npx prisma init
+
+on a un beau dossier prisma qui est apparu, nous y reviendrons
+
+sur supabase, on crée un nouveau projet
+nom 
+mdp 
