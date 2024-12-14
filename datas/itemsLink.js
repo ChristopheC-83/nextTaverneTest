@@ -11,7 +11,13 @@ export const itemsLink = [
         url:'/api-characters',
         name:'API_Perso'
 
-    }
+    },
+    {
+        id:3,
+        url:'/dbCharacters-create',
+        name:'Créer Personnage'
+
+    },
 
 
 ]

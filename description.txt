@@ -1,25 +1,23 @@
-phase 9 :
+phase 10:
 
+dasn app, nous allons donc créer un dossier "api"
 
-avant ça, je me re,nds compte que s'il n'y a plus de personnages, ça ne recharge pas
-dans le useEffect:
- useEffect(() => {
-    if (apiCharacters.length === 0) {
-      fetchApiCharacters();
-    } else {
-      setLoading(false);
-    }
-  }, []);    => on rajoute apiCharacters dans les dépendances, tout simplement
+et là, un choix cornellien
 
-on se rajoute même un toast
+- un fichier dbCharacters avec les 4 operations  dedans 
+ou 
+- un fichier par operation
 
-Voilà qui est mieux
+J'opte pour cette seconde méthode, plus claire et plus facile à maintenir, à mon goût !
 
-on commence en installant prisma: npm i prisma -D
-on initialise : npx prisma init
+créons le fichier create-dbCharacters/route.js
 
-on a un beau dossier prisma qui est apparu, nous y reviendrons
+le route.js est une demande de NextJS pour les routes API.
 
-sur supabase, on crée un nouveau projet
-nom 
-mdp 
+petite digression sur Prisma.
+Nous allons devoir nous connecter en utilisant le prisma client
+Là on fait, on cherche pas à comprendre
+on crée le fichier lib/connect.js
+et on copie colle le code demandé par prisma
+
+On est bon, on met ça de coté pour le moment

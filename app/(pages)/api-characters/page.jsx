@@ -30,7 +30,7 @@ export default function ApiCharacters() {
       }));
 
       setApiCharacters(updatedData);
-      // console.log(updatedData);
+      console.log(updatedData);
     } catch (error) {
       console.error("Error fetching characters:", error);
       setError(error.message);
