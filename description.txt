@@ -1,0 +1,16 @@
+phase 9 :
+
+
+avant ça, je me re,nds compte que s'il n'y a plus de personnages, ça ne recharge pas
+dans le useEffect:
+ useEffect(() => {
+    if (apiCharacters.length === 0) {
+      fetchApiCharacters();
+    } else {
+      setLoading(false);
+    }
+  }, []);    => on rajoute apiCharacters dans les dépendances, tout simplement
+
+on se rajoute même un toast
+
+Voilà qui est mieux
