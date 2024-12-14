@@ -34,9 +34,7 @@ export default function DbCharactersRead({ params: paramsPromise }) {
   async function fetchOneCharacterbyId(id) {
     try {
       const response = await fetch(`/api/read-dbCharacters/${id}`);
-      console.log("response", response);
       const data = await response.json();
-      console.log("data", data);
       if (response.ok) {
         setFormData(data.character); // Mettre à jour le formulaire avec les données du personnage
       } else {

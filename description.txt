@@ -26,6 +26,8 @@ patch serait le changement partiel du personnage, ici nous mettons tout à jour,
 
 dans le fichier route.js, on crée la route update
 
+on complete handlesubmit
 
+si pas déjà fait on fait le css pour les classes / shadows
 
 

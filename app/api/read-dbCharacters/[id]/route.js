@@ -5,7 +5,6 @@ import { NextResponse } from "next/server";
 // Handler pour GET un personnage spécifique
 export const GET = async (req, context) => {
   const { params } = context; // Accéder à `params` depuis le contexte
-  console.log("params", params);
   const { id } = await params; // Résoudre les paramètres dynamiques
 
   try {

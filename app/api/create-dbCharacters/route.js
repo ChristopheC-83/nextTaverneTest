@@ -3,6 +3,7 @@ import { nanoid } from "nanoid"; // Pour générer des IDs uniques
 import { NextResponse } from "next/server";
 
 export const POST = async (req) => {
+  console.log("req", req);
   try {
     // phase 1 : récupérer les données du formulaire
     const body = await req.json();
